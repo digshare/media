@@ -1,6 +1,6 @@
 {
-  "name": "@capacitor-community/media",
-  "version": "1.0.1",
+  "name": "@mufan/capacitor-plugin-media",
+  "version": "1.0.4",
   "description": "Enable some media features for Capacitor such as create albums, save videos, gifs and more.",
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -18,7 +18,9 @@
   "author": "Stewan Silva",
   "license": "MIT",
   "dependencies": {
-    "@capacitor/core": "latest"
+    "@capacitor/core": "latest",
+    "@capacitor/ios": "latest",
+    "@capacitor/android": "latest"
   },
   "devDependencies": {
     "all-contributors-cli": "^6.16.0",
@@ -28,7 +30,7 @@
     "dist/",
     "ios/",
     "android/",
-    "CapacitorCommunityMedia.podspec"
+    "MufanCapacitorPluginMedia.podspec"
   ],
   "keywords": [
     "capacitor",

@@ -1,20 +1,22 @@
 PODS:
-  - Capacitor (0.0.8):
-    - CapacitorCordova (= 0.0.8)
-    - GCDWebServer (~> 3.0)
-  - CapacitorCordova (0.0.8)
-  - GCDWebServer (3.4.2):
-    - GCDWebServer/Core (= 3.4.2)
-  - GCDWebServer/Core (3.4.2)
+  - Capacitor (3.4.1):
+    - CapacitorCordova
+  - CapacitorCordova (3.4.1)
 
 DEPENDENCIES:
-  - Capacitor
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
 
 SPEC CHECKSUMS:
-  Capacitor: 36a275e2fd85b69a2cb9633e8920ecf5c5aab88d
-  CapacitorCordova: cf26a9b075eb1f339118c920a975e4ff9e403193
-  GCDWebServer: 8d67ee9f634b4bb91eb4b8aee440318a5fc6debd
+  Capacitor: 9ff0758671daabc97247c8c57a981379bc30bb5f
+  CapacitorCordova: 4cf19cbad01e5a9e143e2f28f66c621c362f0f79
 
-PODFILE CHECKSUM: 57e6d463d83fe9e2081ca17be52456b12c5e148c
+PODFILE CHECKSUM: 3554a35ce7ab66a27aff56f83994cbfafcf454bb
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.11.2
