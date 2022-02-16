@@ -126,6 +126,9 @@ export interface MediaFetchOptions {
 export interface MediaPluginProtocol {
   getMedias(options?: MediaFetchOptions): Promise<MediaResponse>;
   getAlbums(): Promise<MediaAlbumResponse>;
+  /**
+   * Android 现在仅支持保存 base64/jpeg 图片，其他暂未测试和实现
+   */
   savePhoto(options?: MediaSaveOptions): Promise<void>;
   saveVideo(options?: MediaSaveOptions): Promise<void>;
   saveGif(options?: MediaSaveOptions): Promise<void>;

@@ -185,9 +185,6 @@ public class MediaPlugin extends Plugin {
             return;
         }
 
-        Uri inputUri = Uri.parse(inputPath);
-        File inputFile = new File(inputUri.getPath());
-
         String album = call.getString("album");
         File albumDir = null;
         String albumPath;
@@ -195,10 +192,26 @@ public class MediaPlugin extends Plugin {
 
         if (Build.VERSION.SDK_INT >= 29) {
             albumPath = getContext().getExternalMediaDirs()[0].getAbsolutePath();
-
-        }else{
+        } else {
             albumPath = Environment.getExternalStoragePublicDirectory(dest).getAbsolutePath();
         }
+
+        if (inputPath.startsWith("data")) {
+            Base64.decode(inputPath, Base64.DEFAULT);
+
+            Log.d("save-path", albumPath);
+            byte[] decodedBytes = Base64.decode(inputPath.replaceFirst("data:image\\/jpeg;base64,", ""), Base64.DEFAULT);
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            MediaPlugin.saveImageToGallery(getContext(), decodedBitmap, albumPath);
+
+            return;
+        }
+
+        Log.d("save-photo", inputPath);
+
+        Uri inputUri = Uri.parse(inputPath);
+        File inputFile = new File(inputUri.getPath());
+
 
         // Log.d("ENV LOG", String.valueOf(getContext().getExternalMediaDirs()));
 
@@ -222,6 +235,39 @@ public class MediaPlugin extends Plugin {
             call.reject("RuntimeException occurred", e);
         }
 
+    }
+
+    public static boolean saveImageToGallery(Context context, Bitmap bmp, String albumPath) {
+        // 保存图片
+        String storePath = albumPath;
+        File appDir = new File(storePath);
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            // 压缩
+            boolean isSuccess = bmp.compress(Bitmap.CompressFormat.JPEG, 60, fos);
+            fos.flush();
+            fos.close();
+
+            // 插入到系统图库
+            //MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+
+            // 发送广播通知更新数据库
+            Uri uri = Uri.fromFile(file);
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+            if (isSuccess) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private File copyFile(File inputFile, File albumDir) {
